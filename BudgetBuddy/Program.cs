@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using MudBlazor.Services;
@@ -25,7 +26,9 @@ builder.Services.AddServerSideBlazor()
 	.AddMicrosoftIdentityConsentHandler();
 builder.Services.AddMudServices();
 
-builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddDbContextFactory<AppDbContext>(
+	opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("Database")));
+
 
 var app = builder.Build();
 
