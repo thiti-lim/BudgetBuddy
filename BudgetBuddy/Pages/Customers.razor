@@ -30,12 +30,10 @@
         </EditForm>
         <MudTable Items="@CustomersList">
             <HeaderContent>
-                <MudTh>Customer Id</MudTh>
                 <MudTh>User Id</MudTh>
                 <MudTh>Customer Name</MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd DataLabel="Customer Id">@context.CustomerId</MudTd>
                 <MudTd DataLabel="User Id">@context.UserId</MudTd>
                 <MudTd DataLabel="Customer Name">@context.CustomerName</MudTd>
             </RowTemplate>
@@ -48,7 +46,6 @@
     private CustomerViewModel NewCustomer = new CustomerViewModel();
     protected override async Task OnInitializedAsync()
     {
-        await Task.Delay(1000);
         CustomersList = await repo.GetCustomers();
 
     }

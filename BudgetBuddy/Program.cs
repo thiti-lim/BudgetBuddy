@@ -28,9 +28,11 @@ builder.Services.AddServerSideBlazor()
 	.AddMicrosoftIdentityConsentHandler();
 builder.Services.AddMudServices();
 
-builder.Services.AddSingleton<StateContainer>();
+builder.Services.AddTransient<StateContainer>();
 builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
-builder.Services.AddTransient<ICustomerRepository, MockCustomerRepository>();
+builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
+
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 var app = builder.Build();
 

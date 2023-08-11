@@ -14,10 +14,17 @@ Welcome to your new app.
 @code {
     protected override async Task OnInitializedAsync()
     {
-        var user = (await auth.GetAuthenticationStateAsync()).User;
-        var userId = user.FindFirst(u => u.Type.Contains("objectidentifier"))?.Value;
-        if (userId is not null) {
-            state.CurrentUserId = Guid.Parse(userId);
+        Console.WriteLine(state.CurrentUserId);
+        if (state.CurrentUserId is null)
+        {
+            var user = (await auth.GetAuthenticationStateAsync()).User;
+            var userId = user.FindFirst(u => u.Type.Contains("objectidentifier"))?.Value;
+            if (userId is not null)
+            {
+                state.CurrentUserId = Guid.Parse(userId);
+
+            }
+
         }
     }
 }
