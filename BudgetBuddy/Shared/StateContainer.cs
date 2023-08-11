@@ -2,6 +2,6 @@
 {
     public class StateContainer
     {
-        public Guid CurrentNameId { get; set; }
+        public Guid CurrentUserId { get; set; }
     }
 }

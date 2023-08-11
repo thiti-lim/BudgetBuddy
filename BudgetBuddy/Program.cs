@@ -1,11 +1,13 @@
 using BudgetBuddy.Data;
+using BudgetBuddy.Repositories;
+using BudgetBuddy.Repositories.Interfaces;
+using BudgetBuddy.Shared;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using MudBlazor.Services;
@@ -26,9 +28,9 @@ builder.Services.AddServerSideBlazor()
 	.AddMicrosoftIdentityConsentHandler();
 builder.Services.AddMudServices();
 
-builder.Services.AddDbContextFactory<AppDbContext>(
-	opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("Database")));
-
+builder.Services.AddSingleton<StateContainer>();
+builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
+builder.Services.AddTransient<ICustomerRepository, MockCustomerRepository>();
 
 var app = builder.Build();
 

@@ -1,4 +1,7 @@
 ﻿@page "/"
+@page "/home"
+@inject AuthenticationStateProvider auth
+@inject StateContainer state
 
 <PageTitle>Index</PageTitle>
 
@@ -7,3 +10,14 @@
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var user = (await auth.GetAuthenticationStateAsync()).User;
+        var userId = user.FindFirst(u => u.Type.Contains("objectidentifier"))?.Value;
+        if (userId is not null) {
+            state.CurrentUserId = Guid.Parse(userId);
+        }
+    }
+}
