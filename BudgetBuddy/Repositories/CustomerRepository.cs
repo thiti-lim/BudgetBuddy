@@ -1,7 +1,6 @@
 ﻿using BudgetBuddy.Data;
 using BudgetBuddy.Data.DomainModels;
 using BudgetBuddy.Repositories.Interfaces;
-using BudgetBuddy.ViewModels;
 using Microsoft.Identity.Web;
 
 namespace BudgetBuddy.Repositories
@@ -22,20 +21,28 @@ namespace BudgetBuddy.Repositories
 
 		public Task<IEnumerable<Customer>> GetCustomers()
 		{
-			string sql = $"SELECT * FROM dbo.Customers WHERE UserId = '{currentUserId}'";
+			string sql = $"SELECT * FROM dbo.Customer WHERE UserId = '{currentUserId}'";
 			return db.LoadData<Customer, dynamic>(sql, new { }); 
 		}
 
-		public Task InsertCustomer(CustomerViewModel customer)
+		public Task InsertCustomer(Customer customer)
 		{
-			string sql = @"INSERT INTO dbo.Customer (UserId, CustomerName) VALUES (@UserId, @CustomerName);"; 
-			Customer c = new Customer
-			{
-				UserId = currentUserId,
-				CustomerName = customer.CustomerName,
-			};
+			customer.UserId = currentUserId; 
 
-			return db.SaveData(sql, c); 
+			string sql = @"INSERT INTO dbo.Customer (UserId, CustomerName) VALUES (@UserId, @CustomerName);"; 
+			return db.SaveData(sql, new {UserId = currentUserId, CustomerName = customer.CustomerName}); 
+		}
+
+		public Task UpdateCustomer(Customer customer)
+		{
+			string sql = $"UPDATE dbo.Customer SET CustomerName = @CustomerName where Id = @Id";
+			return db.SaveData(sql, customer);
+		}
+
+		public Task DeleteCustomer(Customer customer)
+		{
+			string sql = $"DELETE FROM dbo.Customer WHERE Id = @Id";
+			return db.SaveData(sql, customer); 
 		}
 
 

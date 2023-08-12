@@ -2,7 +2,6 @@
 using BudgetBuddy.Data.DomainModels;
 using BudgetBuddy.Repositories.Interfaces;
 using BudgetBuddy.Shared;
-using BudgetBuddy.ViewModels;
 using Microsoft.Identity.Web;
 using System.Security.Claims;
 
@@ -62,7 +61,7 @@ namespace BudgetBuddy.Repositories
 			return Task.FromResult(customersInMemory.FirstOrDefault());
 		}
 
-		public Task InsertCustomer(CustomerViewModel customer)
+		public Task InsertCustomer(Customer customer)
 		{
 			Customer c = new Customer
 			{
@@ -73,6 +72,16 @@ namespace BudgetBuddy.Repositories
 			return GetCustomers();
 
 
+		}
+
+		public Task UpdateCustomer(Customer customer)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task DeleteCustomer(Customer customer)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
