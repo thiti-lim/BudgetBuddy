@@ -20,7 +20,7 @@
                 </MudItem>
             </MudGrid>
         </EditForm>
-        @if(CustomersList is not null) {
+        @if(CustomersList is not null && CustomersList.Count() > 0) {
             <MudTable Items="@CustomersList">
                 <HeaderContent>
                     <MudTh>User Id</MudTh>
