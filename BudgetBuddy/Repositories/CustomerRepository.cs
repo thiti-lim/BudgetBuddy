@@ -9,19 +9,19 @@ namespace BudgetBuddy.Repositories
 	{
 		private readonly ISqlDataAccess db;
 		private readonly IHttpContextAccessor contextAccessor;
-		private Guid currentUserId; 
+		private string currentUserId; 
 
 		public CustomerRepository(ISqlDataAccess db, IHttpContextAccessor contextAccessor)
 		{
 			this.db = db;
 			this.contextAccessor = contextAccessor;
 			string? oid = contextAccessor?.HttpContext?.User.GetObjectId() ?? null;
-			if (oid is not null) currentUserId = new Guid(oid);  
+			if (oid is not null) currentUserId = oid;  
 		}
 
 		public Task<IEnumerable<Customer>> GetCustomers()
 		{
-			string sql = $"SELECT * FROM dbo.Customer WHERE UserId = '{currentUserId}'";
+			string sql = $"SELECT * FROM Customer WHERE UserId = '{currentUserId}'";
 			return db.LoadData<Customer, dynamic>(sql, new { }); 
 		}
 
@@ -29,19 +29,19 @@ namespace BudgetBuddy.Repositories
 		{
 			customer.UserId = currentUserId; 
 
-			string sql = @"INSERT INTO dbo.Customer (UserId, CustomerName) VALUES (@UserId, @CustomerName);"; 
+			string sql = @"INSERT INTO Customer (UserId, CustomerName) VALUES (@UserId, @CustomerName);"; 
 			return db.SaveData(sql, new {UserId = currentUserId, CustomerName = customer.CustomerName}); 
 		}
 
 		public Task UpdateCustomer(Customer customer)
 		{
-			string sql = $"UPDATE dbo.Customer SET CustomerName = @CustomerName where Id = @Id";
+			string sql = $"UPDATE Customer SET CustomerName = @CustomerName where Id = @Id";
 			return db.SaveData(sql, customer);
 		}
 
 		public Task DeleteCustomer(Customer customer)
 		{
-			string sql = $"DELETE FROM dbo.Customer WHERE Id = @Id";
+			string sql = $"DELETE FROM Customer WHERE Id = @Id";
 			return db.SaveData(sql, customer); 
 		}
 

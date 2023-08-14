@@ -14,8 +14,8 @@ namespace BudgetBuddy.Repositories
         private IEnumerable<Customer> customersInMemory;
 		private ClaimsPrincipal? currentPrincipal; 
 		private string? currentPrincipalId; 
-		private Guid mockUserId1;
-		private Guid mockUserId2;
+		private string? mockUserId1;
+		private string? mockUserId2;
 
 		public MockCustomerRepository(ISqlDataAccess db, IHttpContextAccessor contextAccessor)
 		{
@@ -32,10 +32,10 @@ namespace BudgetBuddy.Repositories
 
 			if (currentPrincipalId is not null)
 			{
-				mockUserId1 = new Guid(currentPrincipalId);
+				mockUserId1 = new Guid(currentPrincipalId).ToString();
 
 			}
-			mockUserId2 = Guid.NewGuid();
+			mockUserId2 = Guid.NewGuid().ToString();
 
 
 

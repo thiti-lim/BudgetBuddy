@@ -2,7 +2,6 @@
 @using BudgetBuddy.Data.DomainModels
 @using BudgetBuddy.Repositories.Interfaces
 @inject ICustomerRepository repo
-@inject StateContainer state
 
 
 <MudContainer Class="py-8 px-12">
@@ -33,8 +32,7 @@
                     <MudTd DataLabel="User Id">@context.UserId</MudTd>
                     <MudTd DataLabel="Customer Id">@context.Id</MudTd>
                     <MudTd DataLabel="Customer Name">@context.CustomerName</MudTd>
-                    <MudTd DataLabel="Actions" Style="width: 100px">
-                        <MudIconButton Icon="@Icons.Material.Filled.Edit" aria-label="delete" Size="Size.Small"></MudIconButton>
+                    <MudTd DataLabel="Actions" Style="width: 50px">
                         <MudIconButton OnClick="@(e => DeleteCustomer(@context))" Icon="@Icons.Material.Filled.Delete" aria-label="delete" Size="Size.Small"></MudIconButton>
                     </MudTd>
                 </RowTemplate>
@@ -45,7 +43,7 @@
     <MudProgressCircular Color="Color.Secondary" Indeterminate="true" Size="Size.Large" />
 </MudOverlay>
 @code {
-    private IEnumerable<Customer> CustomersList { get; set; }
+    private IEnumerable<Customer>? CustomersList { get; set; }
     private Customer NewCustomer = new Customer();
     private bool IsLoading { get; set; }
     protected override async Task OnInitializedAsync()

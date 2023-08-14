@@ -2,7 +2,7 @@
 
 <PageTitle>BudgetBuddy</PageTitle>
 
-<MudThemeProvider Theme="CustomTheme" />
+<MudThemeProvider Theme="CustomTheme" IsDarkMode="false" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 <AuthorizeView>
@@ -11,18 +11,19 @@
             <MudAppBar Elevation="1">
                 <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
                 <MudSpacer />
-                <MudLink Href="MicrosoftIdentity/Account/SignOut">LOG OUT</MudLink>
+                <MudText Style="color: white" Class="mr-3">@context.User.Identity.Name</MudText>
+                <MudLink Href="MicrosoftIdentity/Account/SignOut" Color="Color.Info">LOG OUT</MudLink>
 
             </MudAppBar>
             <MudDrawer @bind-Open="_drawerOpen" Elevation="2" class="py-3">
-                    <MudNavMenu Class="mud-width-full">
-                        <MudText Typo="Typo.h6" Class="px-4">Budget Buddy</MudText>
-                        <MudDivider DividerType="DividerType.Middle" Class="my-2" />
-                        <MudNavLink Href="/home" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-                        <MudNavLink Href="/customers" Icon="@Icons.Material.Filled.Person">Customers</MudNavLink>
-                        <MudNavLink Href="/jobs" Icon="@Icons.Material.Filled.List">Jobs</MudNavLink>
-                        <MudNavLink Href="/jobs/add" Icon="@Icons.Material.Filled.AddBox">Add Job</MudNavLink>
-                    </MudNavMenu>
+                <MudNavMenu Class="mud-width-full">
+                    <MudText Typo="Typo.h6" Class="px-4">Budget Buddy</MudText>
+                    <MudDivider DividerType="DividerType.Middle" Class="my-2" />
+                    <MudNavLink Href="/home" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+                    <MudNavLink Href="/customers" Icon="@Icons.Material.Filled.Person">Customers</MudNavLink>
+                    <MudNavLink Href="/jobs/list" Icon="@Icons.Material.Filled.List">Jobs</MudNavLink>
+                    <MudNavLink Href="/jobs/add" Icon="@Icons.Material.Filled.AddBox">Add Job</MudNavLink>
+                </MudNavMenu>
             </MudDrawer>
             <MudMainContent>
                 @Body
@@ -30,10 +31,14 @@
         </MudLayout>
     </Authorized>
     <NotAuthorized>
-        <div style="height: 100vh; width: 100vw; background-color: #00838F" class="d-flex justify-center align-center">
-            <div class="d-flex flex-column justify-center">
-                <MudText Style="color: #E0F7FA" Typo="Typo.h6" Align="Align.Center" class="pb-2">EN Program</MudText>
-                <MudButton Variant="Variant.Filled" Href="MicrosoftIdentity/Account/SignIn" Color="Color.Primary">Log In</MudButton>
+        <div style="height: 100vh; width: 100vw;" class="d-flex justify-center align-center mud-theme-primary">
+            <div class="d-flex flex-column justify-center align-center">
+                <div>
+                    <MudText Style="color: white" Typo="Typo.h3" Align="Align.Center" class="mb-6">Budget Buddy</MudText>
+                </div>
+                <div>
+                    <MudButton Variant="Variant.Outlined" Href="MicrosoftIdentity/Account/SignIn" Style="color: white; border-color: white; width: 100px">Log In</MudButton>
+                </div>
             </div>
         </div>
     </NotAuthorized>
@@ -51,7 +56,8 @@
             Palette = new PaletteLight()
             {
                 Primary = Colors.DeepPurple.Default,
-                Background = Colors.Cyan.Lighten3,
+                Background = Colors.Grey.Lighten2,
+                Info = Colors.Grey.Lighten5,
             },
             LayoutProperties = new LayoutProperties()
             {

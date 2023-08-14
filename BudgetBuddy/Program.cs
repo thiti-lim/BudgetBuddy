@@ -1,17 +1,11 @@
 using BudgetBuddy.Data;
 using BudgetBuddy.Repositories;
 using BudgetBuddy.Repositories.Interfaces;
-using BudgetBuddy.Shared;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using MudBlazor.Services;
-
+using MySqlConnector;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,17 +15,18 @@ builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
 builder.Services.AddControllersWithViews()
 	.AddMicrosoftIdentityUI();
 
+//builder.Services.AddSignalR().AddAzureSignalR(options => options.ServerStickyMode = Microsoft.Azure.SignalR.ServerStickyMode.Required);
 builder.Services.AddAuthorization();
 
+//builder.Services.AddTransient(x => new MySqlConnection(builder.Configuration.GetConnectionString("Default"))); 
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor()
 	.AddMicrosoftIdentityConsentHandler();
 builder.Services.AddMudServices();
 
-builder.Services.AddTransient<StateContainer>();
+
 builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
-
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 var app = builder.Build();
