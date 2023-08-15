@@ -8,20 +8,20 @@ namespace BudgetBuddy.Data
     public class SqlDataAccess : ISqlDataAccess
     {
         private readonly IConfiguration config;
+        private readonly MySqlConnection connection;
 
-        public SqlDataAccess(IConfiguration config)
+        public SqlDataAccess(MySqlConnection connection, IConfiguration config)
         {
+            this.connection = connection; 
             this.config = config;
         }
-        public async Task<IEnumerable<T>> LoadData<T, U>(string sql, U parameters, string connectionId = "Default")
+        public async Task<IEnumerable<T>> LoadData<T, U>(string sql, U parameters)
         {
-            using IDbConnection connection = new MySqlConnection(config.GetConnectionString(connectionId));
             return await connection.QueryAsync<T>(sql, parameters);
         }
 
-        public async Task SaveData<T>(string sql, T parameters, string connectionId = "Default")
+        public async Task SaveData<T>(string sql, T parameters)
         {
-            using IDbConnection connection = new MySqlConnection(config.GetConnectionString(connectionId));
             await connection.ExecuteAsync(sql, parameters);
         }
     }

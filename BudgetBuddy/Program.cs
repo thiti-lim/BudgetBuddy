@@ -18,7 +18,7 @@ builder.Services.AddControllersWithViews()
 //builder.Services.AddSignalR().AddAzureSignalR(options => options.ServerStickyMode = Microsoft.Azure.SignalR.ServerStickyMode.Required);
 builder.Services.AddAuthorization();
 
-//builder.Services.AddTransient(x => new MySqlConnection(builder.Configuration.GetConnectionString("Default"))); 
+builder.Services.AddTransient(x => new MySqlConnection(builder.Configuration.GetConnectionString("Local"))); 
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor()
 	.AddMicrosoftIdentityConsentHandler();
