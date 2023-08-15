@@ -8,15 +8,12 @@ namespace BudgetBuddy.Repositories
 	public class CustomerRepository : ICustomerRepository
 	{
 		private readonly ISqlDataAccess db;
-		private readonly IHttpContextAccessor contextAccessor;
 		private string currentUserId; 
 
 		public CustomerRepository(ISqlDataAccess db, IHttpContextAccessor contextAccessor)
 		{
 			this.db = db;
-			this.contextAccessor = contextAccessor;
-			string? oid = contextAccessor?.HttpContext?.User.GetObjectId() ?? null;
-			if (oid is not null) currentUserId = oid;  
+			currentUserId = contextAccessor?.HttpContext?.User.GetObjectId() ?? "00000000-0000-0000-0000-000000000000";
 		}
 
 		public Task<IEnumerable<Customer>> GetCustomers()
@@ -30,7 +27,7 @@ namespace BudgetBuddy.Repositories
 			customer.UserId = currentUserId; 
 
 			string sql = @"INSERT INTO Customer (UserId, CustomerName) VALUES (@UserId, @CustomerName);"; 
-			return db.SaveData(sql, new {UserId = currentUserId, CustomerName = customer.CustomerName}); 
+			return db.SaveData(sql, customer); 
 		}
 
 		public Task UpdateCustomer(Customer customer)

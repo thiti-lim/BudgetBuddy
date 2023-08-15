@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BudgetBuddy.constants;
+using System.ComponentModel.DataAnnotations;
 
 namespace BudgetBuddy.Data.DomainModels
 {
@@ -11,7 +12,10 @@ namespace BudgetBuddy.Data.DomainModels
         public string? JobName { get; set; }
         [Required]
         public string? CustomerName { get; set; }
-        public IEnumerable<DirectLabor> DirectLabors { get; set; }
-        public IEnumerable<DirectMaterial> DirectLabors { get; set; }
+        public IEnumerable<DirectLabor>? DirectLabors { get; set; }
+        public IEnumerable<DirectMaterial>? DirectMaterials { get; set; }
+        public Status CurrentStatus { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime FinishDate { get; set; }
     }
 }

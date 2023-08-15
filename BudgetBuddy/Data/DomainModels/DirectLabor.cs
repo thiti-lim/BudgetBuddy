@@ -8,6 +8,6 @@
         public decimal ExpectedWage { get; set; }
         public decimal ExpectedHours  { get; set; }
         public decimal ActualWage { get; set; }
-        public decimal ActualHours  { get; set; }
+        public decimal ActualMinutes  { get; set; }
     }
 }
